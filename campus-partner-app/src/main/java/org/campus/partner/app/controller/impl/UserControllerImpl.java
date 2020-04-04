@@ -60,7 +60,7 @@ public class UserControllerImpl implements UserController {
     @CheckUserAccess
     @Override
     public VoAuthUserResp authUser(@PathVariable(RestParam.PV_USER_ID) String uid, @RequestBody VoAuthUserReq req) {
-        BoAuthUserResp boAuth = userService.authUser(DtoUserMapper.INSTANCE.toBoAuthUserReq(req));
+        userService.authUser(DtoUserMapper.INSTANCE.toBoAuthUserReq(req));
         VoAuthUserResp resp = new VoAuthUserResp(UserCode.SUCCESS);
         return resp;
     }
@@ -71,7 +71,7 @@ public class UserControllerImpl implements UserController {
     @Override
     public VoAuthCardUserResp authCardUser(@PathVariable(RestParam.PV_USER_ID) String uid,
             @RequestBody VoAuthCardUserReq req) {
-        BoAuthCardUserResp boresp = userService.authCardUser(DtoUserMapper.INSTANCE.toBoAuthCardUserReq(req));
+        userService.authCardUser(DtoUserMapper.INSTANCE.toBoAuthCardUserReq(req));
         VoAuthCardUserResp resp = new VoAuthCardUserResp(UserCode.SUCCESS);
         return resp;
     }
