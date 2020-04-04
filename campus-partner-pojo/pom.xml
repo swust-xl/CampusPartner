@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>SWUST</groupId>
+		<artifactId>CampusPartner</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>campus-partner-pojo</artifactId>
+	<name>campus-partner-pojo</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>SWUST</groupId>
+			<version>1.0.0-SNAPSHOT</version>
+			<artifactId>campus-partner-conf</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>campus-partner-pojo</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>3.9.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- 日志级别:WARN,DEBUG,ERROR,FATAL,INFO,TRACE -->
+					<logging>WARN</logging>
+					<jdbc>
+						<!-- 数据库连接信息：地址，用户名，密码 -->
+						<driver>com.mysql.cj.jdbc.Driver</driver>
+						<url>jdbc:mysql://localhost:3306?serverTimezone=UTC&amp;useSSL=false</url>
+						<user>root</user>
+						<password>123</password>
+					</jdbc>
+					<generator>
+						<generate>
+							<!-- 设置额外生成数据库表的映射对象 -->
+							<pojos>true</pojos>
+						</generate>
+						<database>
+							<name>org.jooq.util.mysql.MySQLDatabase</name>
+							<includes>.*</includes>
+							<!-- 指定数据库名称 -->
+							<inputSchema>campus_partner</inputSchema>
+							<forcedTypes>
+								<forcedType>
+									<userType>java.util.Date</userType>
+									<converter>org.campus.partner.util.converter.DateConverter</converter>
+									<types>datetime</types>
+								</forcedType>
+								<forcedType>
+									<name>Boolean</name>
+									<types>tinyint</types>
+								</forcedType>
+							</forcedTypes>
+						</database>
+						<target>
+							<!-- 自动生成的代码的位置 -->
+							<packageName>org.campus.partner.pojo.po.mysql</packageName>
+							<directory>src/main/java</directory>
+						</target>
+					</generator>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
